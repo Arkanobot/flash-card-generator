@@ -1,4 +1,8 @@
 import { configureStore } from "@reduxjs/toolkit";
-import reducers from "./reducers";
+import mobileReducer from "./isMobile";
 
-export const store = configureStore({ reducer: reducers }, {});
+export default configureStore({
+  reducer: {
+    mobile: mobileReducer,
+  },
+});

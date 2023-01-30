@@ -3,7 +3,9 @@ import React, { useState, useEffect } from "react";
 //react-icons
 import { TbFileUpload } from "react-icons/tb";
 import { IoMdAdd } from "react-icons/io";
-// import { useSelector, useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { mobileVal } from "../redux/isMobile";
+import { clear } from "@testing-library/user-event/dist/clear";
 // import { bindActionCreators } from "redux";
 // import { actionCreators } from "../redux/index";
 // function FlashCardCreator() {
@@ -13,6 +15,21 @@ import { IoMdAdd } from "react-icons/io";
 // export default FlashCardCreator;
 
 export default function FlashCardCreator() {
+  //isMobile check , responsive for small screens to check if screen width less than 900px
+  const { isMobile } = useSelector((state) => state.mobile);
+  const dispatch = useDispatch();
+  //useEffect to handle resize of the window html - if window size smaller than 900
+  useEffect(() => {
+    window.addEventListener(
+      "resize",
+      () => {
+        const ismobile = window.innerWidth < 900;
+        if (ismobile !== isMobile) dispatch(mobileVal(ismobile));
+      },
+      false
+    );
+  }, [isMobile, dispatch]);
+
   const [term, setTerm] = useState([{ no: "1", name: "", defination: "" }]);
   const handleAdd = () => {
     const tr = [...term, { no: "", name: "", defination: "" }];
@@ -27,28 +44,31 @@ export default function FlashCardCreator() {
     }
   };
 
-  //isMobile check , responsive for small screens
-  const [isMobile, setIsMobile] = useState(window.innerWidth < 900);
-  useEffect(() => {
-    window.addEventListener(
-      "resize",
-      () => {
-        const ismobile = window.innerWidth < 900;
-        if (ismobile !== isMobile) setIsMobile(ismobile);
-      },
-      false
-    );
-  }, [isMobile]);
+  //card group data goes here
+  let cardGroup;
+  let timerGrpName; // timer for handling time
+  const handleCardGroup = (event) => {
+    clearTimeout(timerGrpName);
+    timerGrpName = setTimeout(() => {
+      cardGroup = event.target.value;
+    }, 500);
+  };
 
-  // const state = useSelector((state) => state);
-  // const dispatch = useDispatch();
+  // card image and description goes here
+  let groupImg;
+  const handleGroupImg = (e) => {
+    groupImg = document.getElementById("file-upload").files[0];
+  };
 
-  // const { createCardGroup, deleteCardGroup, createCardTerm } =
-  //   bindActionCreators(actionCreators, dispatch);
-
-  //state for checking if the window size is smaller than 500 px
-
-  //useEffect to handle resize of the window html - if window size smaller than 500
+  let groupDesc;
+  let timerGrpDesc;
+  const handleGroupDesc = (event) => {
+    clearTimeout(timerGrpDesc);
+    timerGrpDesc = setTimeout(() => {
+      groupDesc = event.target.value;
+    }, 700);
+  };
+  // functions relating to terms go here
 
   return (
     <div className="flashCardCreator my-14 grid grid-cols-1">
@@ -69,9 +89,10 @@ export default function FlashCardCreator() {
             placeholder="Please Enter a Group Name (max 40 chars)"
             minLength="1"
             maxLength="40"
+            onKeyUp={(e) => handleCardGroup(e)}
           />
         </div>
-        <div className="groupImage m-2 p-1.5 py-4">
+        <div className="groupImage m-2 p-1.5 py-4" id="group-image">
           <label
             for="file-upload"
             className="flex p-2 py-4 border-solid border-2 border-slate-400 rounded-lg shadow-inner shadow-gray  cursor-pointer justify-center"
@@ -85,6 +106,7 @@ export default function FlashCardCreator() {
             type="file"
             lable="groupImage"
             required
+            onChange={(e) => handleGroupImg(e)}
           />
         </div>
         <div className="groupDescription col-span-3 mr-5">
@@ -100,6 +122,9 @@ export default function FlashCardCreator() {
             placeholder="Please Enter the description (max 350 chars)"
             row="5"
             maxLength="350"
+            onKeyUp={(e) => {
+              handleGroupDesc(e);
+            }}
           ></textarea>
         </div>
       </div>
@@ -108,7 +133,8 @@ export default function FlashCardCreator() {
       <div
         className={`group__terms groupHeading grid ${
           isMobile ? "grid-cols-1" : "grid-cols-9"
-        } col-span-1 rounded-lg border-2 my-14 py-14 px-8 bg-white shadow-lg shadow-gray`}
+        } col-span-1 rounded-lg border-2 my-14 py-14 px-8 bg-white shadow-lg shadow-gray 
+        }`}
       >
         {/*creating more terms based on click */}
         {term.map((data, i) => {
@@ -165,10 +191,10 @@ export default function FlashCardCreator() {
                 <div className="groupImage m-2 mt-8 p-1.5 py-4">
                   <label
                     for="img-upload"
-                    className="flex p-2 py-4 border-solid border-2 border-slate-400 rounded-lg shadow-inner shadow-gray  cursor-pointer justify-center"
+                    className="flex p-2 py-4 border-solid border-2 border-blue-600 rounded-lg shadow-inner shadow-gray  cursor-pointer justify-center"
                   >
-                    <TbFileUpload size={40} />
-                    <p className={`p-2`}>Select Image</p>
+                    <TbFileUpload size={40} style={{ color: "#2563eb" }} />
+                    <p className={`p-2 text-blue-600`}>Select Image</p>
                   </label>
                   <input
                     className="hidden"
@@ -183,7 +209,7 @@ export default function FlashCardCreator() {
           );
         })}
         <div className={`addMore ${isMobile ? "col-span-1" : "col-span-2"}`}>
-          <button onClick={() => handleAdd()} className="text-sky-600">
+          <button onClick={() => handleAdd()} className="text-blue-600">
             <div className="flex p-2">
               <IoMdAdd className="m-1" />
               Add More

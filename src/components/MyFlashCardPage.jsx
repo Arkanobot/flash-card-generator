@@ -1,18 +1,21 @@
 import React, { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { mobileVal } from "../redux/isMobile";
 import TitleCard from "./TitleCard";
 
 function MyFlashCardPage() {
-  const [isMobile, setIsMobile] = useState(window.innerWidth < 900);
+  const { isMobile } = useSelector((state) => state.mobile);
+  const dispatch = useDispatch();
   useEffect(() => {
     window.addEventListener(
       "resize",
       () => {
         const ismobile = window.innerWidth < 900;
-        if (ismobile !== isMobile) setIsMobile(ismobile);
+        if (ismobile !== isMobile) dispatch(mobileVal(ismobile));
       },
       false
     );
-  }, [isMobile]);
+  }, [isMobile, dispatch]);
 
   const flashCards = [
     {

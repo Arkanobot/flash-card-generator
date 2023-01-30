@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 
 //react-icons
 import { RiArrowGoForwardLine } from "react-icons/ri";
 import { BsBoxArrowInDown } from "react-icons/bs";
 import { HiOutlinePrinter } from "react-icons/hi";
-import { act } from "react-dom/test-utils";
+import { mobileVal } from "../redux/isMobile";
 
-function FlashCardTerms() {
+function FlashCardTerms(props) {
   const terms = {
     term1: {
       img: "https://images.unsplash.com/photo-1595790217471-cc501a17e15e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1929&q=80",
@@ -30,17 +31,17 @@ function FlashCardTerms() {
   const [def, setDef] = useState(terms.term1.def);
   const [active, setActive] = useState(Object.keys(terms)[0]);
 
-  const [isMobile, setIsMobile] = useState(window.innerWidth < 900);
+  const { isMobile } = useSelector((state) => state.mobile);
   useEffect(() => {
     window.addEventListener(
       "resize",
       () => {
-        const ismobile = window.innerWidth < 900;
-        if (ismobile !== isMobile) setIsMobile(ismobile);
+        const ismobile = window.innerWidth < 1177;
+        if (ismobile !== isMobile) props.dispatch(mobileVal(ismobile));
       },
       false
     );
-  }, [isMobile]);
+  }, [isMobile, props]);
 
   const handleClick = (name) => {
     setActive(name);
@@ -89,7 +90,7 @@ function FlashCardTerms() {
             return (
               <div
                 onClick={() => handleClick(name)}
-                className={`px-14 py-4  font-semibold ${
+                className={`px-14 py-4  font-semibold hover:bg-slate-100 ${
                   active === name ? "text-red-700 text-4xl" : "text-3xl"
                 }`}
               >
@@ -155,15 +156,15 @@ function FlashCardTerms() {
       {/* share print and download button shows up here */}
 
       <div className="sharebutton grid grid-cols-1 grid-row-3 place-content-top col-span-1 h-[20vh]">
-        <button className="rounded-lg border-2 py-6 px-8 bg-white shadow-lg shadow-gray mb-5 mx-[20%] text-xl text-slate-500 font-semibold grid  grid-cols-3 place-content-center">
+        <button className="rounded-lg border-2 py-6 px-8 bg-white shadow-lg shadow-gray mb-5 mx-[6%] text-xl text-slate-500 font-semibold grid  grid-cols-3 place-content-center hover:bg-slate-100">
           <RiArrowGoForwardLine className="h-5 w-5 m-1 mx-auto" />
           <span className="col-span-1">Share</span>
         </button>
-        <button className="rounded-lg border-2 py-6 px-8 bg-white shadow-lg shadow-gray mb-5 mx-[20%] text-xl text-slate-500 font-semibold grid  grid-cols-3 place-content-center">
+        <button className="rounded-lg border-2 py-6 px-8 bg-white shadow-lg shadow-gray mb-5 mx-[6%] text-xl text-slate-500 font-semibold grid  grid-cols-3 place-content-center hover:bg-slate-100">
           <BsBoxArrowInDown className="h-5 w-5 mx-auto" />
           Download
         </button>
-        <button className="rounded-lg border-2 py-6 px-8 bg-white shadow-lg shadow-gray mb-5 mx-[20%] text-xl text-slate-500 font-semibold grid  grid-cols-3 place-content-center">
+        <button className="rounded-lg border-2 py-6 px-8 bg-white shadow-lg shadow-gray mb-5 mx-[6%] text-xl text-slate-500 font-semibold grid  grid-cols-3 place-content-center hover:bg-slate-100">
           <HiOutlinePrinter className="h-5 w-5 m-1 mx-auto" />
           Print
         </button>

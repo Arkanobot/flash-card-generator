@@ -1,9 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import FlashCardTerms from "./FlashCardTerms";
 import { useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
 
 //react-icons
 import { IoMdArrowRoundBack } from "react-icons/io";
+import { mobileVal } from "../redux/isMobile";
 
 function FlashCardDetails() {
   const flash = {
@@ -17,17 +19,18 @@ function FlashCardDetails() {
     navigate("/");
   };
 
-  const [isMobile, setIsMobile] = useState(window.innerWidth < 900);
+  const { isMobile } = useSelector((state) => state.mobile);
+  const dispatch = useDispatch();
   useEffect(() => {
     window.addEventListener(
       "resize",
       () => {
-        const ismobile = window.innerWidth < 900;
-        if (ismobile !== isMobile) setIsMobile(ismobile);
+        const ismobile = window.innerWidth < 1177;
+        if (ismobile !== isMobile) dispatch(mobileVal(ismobile));
       },
       false
     );
-  }, [isMobile]);
+  }, [isMobile, dispatch]);
 
   return (
     <div>
@@ -41,7 +44,7 @@ function FlashCardDetails() {
           onClick={onClickBack}
         >
           {isMobile ? (
-            <p className="col-span-1 rounded-lg border-2 px-4 py-2 bg-white shadow-lg shadow-gray">
+            <p className="col-span-1 rounded-lg border-2 px-4 py-2 bg-white shadow-lg shadow-gray text-slate-500">
               Back
             </p>
           ) : (
@@ -60,11 +63,11 @@ function FlashCardDetails() {
             isMobile ? "col-span-1" : "col-span-11 col-start-2"
           }`}
         >
-          <span>{flash.description}</span>
+          <span className="text-slate-500">{flash.description}</span>
         </div>
       </div>
       <div className="terms">
-        <FlashCardTerms />
+        <FlashCardTerms dispatch={dispatch} />
       </div>
     </div>
   );
