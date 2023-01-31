@@ -2,10 +2,12 @@ import { createSlice } from "@reduxjs/toolkit";
 
 export const flashcardSlice = createSlice({
   name: "flashcards",
-  initialState: {},
+  initialState: {
+    cards: {},
+  },
   reducers: {
     cardVal: (state, action) => {
-      state = Object.assign(state, action.payload);
+      state.cards = Object.assign(state.cards, action.payload);
     },
   },
 });

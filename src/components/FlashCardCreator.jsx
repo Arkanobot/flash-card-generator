@@ -7,6 +7,9 @@ import { useSelector, useDispatch } from "react-redux";
 import { mobileVal } from "../redux/isMobile";
 import { cardVal } from "../redux/flashcards";
 
+//variable to set key for the redux group - this is set outside the function so that it does not sent to 0 every time the state changes
+let grpId = 0;
+
 export default function FlashCardCreator() {
   //isMobile check , responsive for small screens to check if screen width less than 900px
   const { isMobile } = useSelector((state) => state.mobile);
@@ -25,22 +28,33 @@ export default function FlashCardCreator() {
 
   //state for storing card infos
   // const { cards } = useSelector((state) => state.cards);
+
+  const [group, setGroup] = useState();
   //card group data goes here
-  let groupName;
+  // let groupName;
   const handleCardGroup = (event) => {
-    groupName = event.target.value;
+    // groupName = event.target.value;
+    let grp = { name: event.target.value, desc: "", img: "" };
+    setGroup(grp);
   };
 
   // card image and description goes here
-  let groupImg;
+  // let groupImg;
   const handleGroupImg = () => {
     let img = document.getElementById("file-upload").files[0];
-    groupImg = URL.createObjectURL(img);
+    // groupImg = URL.createObjectURL(img)
+    let grpimg = URL.createObjectURL(img);
+    let grp = { ...group };
+    grp.img = grpimg;
+    setGroup(grp);
   };
 
-  let groupDesc;
+  // let groupDesc;
   const handleGroupDesc = (event) => {
-    groupDesc = event.target.value;
+    // groupDesc = event.target.value;
+    let grp = { ...group };
+    grp.desc = event.target.value;
+    setGroup(grp);
   };
   // state to manage terms
   let slNo = 1;
@@ -79,17 +93,17 @@ export default function FlashCardCreator() {
   };
 
   //create group function goes here
-  let grpId = 0;
+
   const handleGroupCreate = () => {
     // bring the redux and put in the group name, grp img, grp desc and terms and dispatch ! :D
     ++grpId;
     console.log(grpId);
-    if (groupName !== undefined) {
+    if (group.name !== undefined) {
       let cardGroup = {};
       cardGroup[grpId] = {
-        name: groupName,
-        desc: groupDesc,
-        img: groupImg,
+        name: group.name,
+        desc: group.desc,
+        img: group.img,
         terms: term,
       };
       console.log(cardGroup);
