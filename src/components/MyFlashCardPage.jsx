@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { mobileVal } from "../redux/isMobile";
+import { cardVal } from "../redux/flashcards";
 import TitleCard from "./TitleCard";
 
 function MyFlashCardPage() {
