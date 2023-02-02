@@ -276,7 +276,7 @@ export default function FlashCardCreator() {
           <button
             className="p-3 border-2 border-solid border-red-700 bg-red-700 rounded-md text-white font-bold text-xl"
             onClick={handleGroupCreate}
-            type="submit"
+            type="button"
           >
             Create Group
           </button>

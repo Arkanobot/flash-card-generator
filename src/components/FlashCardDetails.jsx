@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import FlashCardTerms from "./FlashCardTerms";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 
 //react-icons
@@ -8,12 +8,17 @@ import { IoMdArrowRoundBack } from "react-icons/io";
 import { mobileVal } from "../redux/isMobile";
 
 function FlashCardDetails() {
-  const flash = {
-    name: "Name Card",
-    img: "https://images.unsplash.com/photo-1595790217471-cc501a17e15e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1929&q=80",
-    description:
-      "description of the card and the term bla bla blaaaaaaaaaaaa aaaaaaaaaaaa aaaaaaaaaaaaa aaaaaaaa aaaaaaa aaa",
-  };
+  const { cards } = useSelector((state) => state.cards);
+  const { id } = useParams();
+  const flashCards = Object.values(cards);
+  // console.log(flashCards);
+
+  // const flash = {
+  //   name: "Name Card",
+  //   img: "https://images.unsplash.com/photo-1595790217471-cc501a17e15e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1929&q=80",
+  //   description:
+  //     "description of the card and the term bla bla blaaaaaaaaaaaa aaaaaaaaaaaa aaaaaaaaaaaaa aaaaaaaa aaaaaaa aaa",
+  // };
   const navigate = useNavigate();
   const onClickBack = () => {
     navigate("/");
@@ -56,14 +61,14 @@ function FlashCardDetails() {
             isMobile ? "col-span-1" : "col-span-11"
           } `}
         >
-          {flash.name}
+          {flashCards[id].name}
         </div>
         <div
           className={`text-2xl font-semibold m-5 mb-10 ${
             isMobile ? "col-span-1" : "col-span-11 col-start-2"
           }`}
         >
-          <span className="text-slate-500">{flash.description}</span>
+          <span className="text-slate-500">{flashCards[id].desc}</span>
         </div>
       </div>
       <div className="terms">

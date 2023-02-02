@@ -8,14 +8,12 @@ import { HiOutlinePrinter } from "react-icons/hi";
 import { mobileVal } from "../redux/isMobile";
 import { useParams } from "react-router-dom";
 
-const Count = 0;
+// const Count = 0;
 
 function FlashCardTerms(props) {
   const { id } = useParams();
-  console.log(id);
   const { cards } = useSelector((state) => state.cards);
   const flashCards = Object.values(cards);
-  console.log(flashCards);
 
   // const terms = {
   //   term1: {
@@ -40,7 +38,7 @@ function FlashCardTerms(props) {
   // const [def, setDef] = useState(terms.term1.def);
   // const [active, setActive] = useState(Object.keys(terms)[0]);
   const [img, setImg] = useState(); //flashCards[id].terms[0].img
-  const [def, setDef] = useState(flashCards[id].terms[0].def);
+  const [def, setDef] = useState(flashCards[id].terms[0].defination);
   const [active, setActive] = useState(Object.keys(flashCards[id].terms)[0]);
 
   const { isMobile } = useSelector((state) => state.mobile);
@@ -63,7 +61,7 @@ function FlashCardTerms(props) {
   const handleClick = (i) => {
     setActive(i);
     setImg(flashCards[id].terms[i].img);
-    setDef(flashCards[id].terms[i].def);
+    setDef(flashCards[id].terms[i].defination);
   };
 
   const onClickNext = (active) => {
@@ -71,6 +69,8 @@ function FlashCardTerms(props) {
       const index = keys.indexOf(active);
       const act = keys[index + 1];
       setActive(act);
+      setImg(flashCards[id].terms[keys[keys.indexOf(active) + 1]].img);
+      setDef(flashCards[id].terms[keys[keys.indexOf(active) + 1]].defination);
       // setImg(terms[keys[keys.indexOf(active) + 1]].img);
       // setDef(terms[keys[keys.indexOf(active) + 1]].def);
     }
@@ -80,6 +80,8 @@ function FlashCardTerms(props) {
     if (keys.indexOf(active) + 1 > 1) {
       const index = keys.indexOf(active);
       setActive(keys[index - 1]);
+      setImg(flashCards[id].terms[keys[keys.indexOf(active) - 1]].img);
+      setDef(flashCards[id].terms[keys[keys.indexOf(active) - 1]].defination);
     }
     //   setImg(terms[keys[keys.indexOf(active) - 1]].img);
     //   setDef(terms[keys[keys.indexOf(active) - 1]].def);
@@ -87,8 +89,9 @@ function FlashCardTerms(props) {
   };
 
   // const keys = Object.keys(terms);
-  const keys = Object.values(flashCards[id].terms.no);
-  console.log(keys);
+  const keys = Object.keys(flashCards[id].terms);
+  // console.log(keys);
+  // console.log(def);
 
   return (
     <div
@@ -114,7 +117,7 @@ function FlashCardTerms(props) {
                   active === name ? "text-red-700 text-4xl" : "text-3xl"
                 }`}
               >
-                {name}
+                {flashCards[id].terms[name].name}
               </div>
             );
           })}
