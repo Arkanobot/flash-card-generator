@@ -6,30 +6,42 @@ import { RiArrowGoForwardLine } from "react-icons/ri";
 import { BsBoxArrowInDown } from "react-icons/bs";
 import { HiOutlinePrinter } from "react-icons/hi";
 import { mobileVal } from "../redux/isMobile";
+import { useParams } from "react-router-dom";
+
+const Count = 0;
 
 function FlashCardTerms(props) {
-  const terms = {
-    term1: {
-      img: "https://images.unsplash.com/photo-1595790217471-cc501a17e15e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1929&q=80",
-      def: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit beatae tenetur non, aliquam id quis ad error, consequatur fugiat vitae culpa aspernatur. Error ipsum maiores maxime a dolores incidunt velit nam corporis nulla? Quidem, sapiente, veritatis aliquid velit voluptas asperiores eveniet recusandae, amet culpa blanditiis autem quod fuga voluptatibus voluptatum ducimus impedit hic. Voluptatibus quam molestias saepe iure officia, corrupti maxime illum cupiditate consequatur odio iusto minima repudiandae consectetur aliquid rem, quis eum impedit ab. Nihil molestias qui tempore odit.",
-    },
-    term2: {
-      img: "https://plus.unsplash.com/premium_photo-1671638543170-8a1b232c11b9?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80",
-      def: "description of the card and the term bla bla bla2",
-    },
-    term3: {
-      img: "https://images.unsplash.com/photo-1580144185736-77ee9168752c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80",
-      def: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit beatae tenetur non, aliquam id quis ad error, consequatur fugiat vitae culpa aspernatur. Error ipsum maiores maxime a dolores incidunt velit nam corporis nulla?",
-    },
-    term4: {
-      img: "https://images.unsplash.com/photo-1590749670993-806265aa558a?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80",
-      def: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit beatae tenetur non, aliquam id quis ad error, consequatur fugiat vitae culpa aspernatur. Error ipsum maiores maxime a dolores incidunt velit nam corporis nulla? Quidem, sapiente, veritatis aliquid velit voluptas asperiores eveniet recusandae, amet culpa blanditiis autem quod fuga voluptatibus voluptatum ducimus impedit hic.",
-    },
-  };
+  const { id } = useParams();
+  console.log(id);
+  const { cards } = useSelector((state) => state.cards);
+  const flashCards = Object.values(cards);
+  console.log(flashCards);
 
-  const [img, setImg] = useState(terms.term1.img);
-  const [def, setDef] = useState(terms.term1.def);
-  const [active, setActive] = useState(Object.keys(terms)[0]);
+  // const terms = {
+  //   term1: {
+  //     img: "https://images.unsplash.com/photo-1595790217471-cc501a17e15e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1929&q=80",
+  //     def: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit beatae tenetur non, aliquam id quis ad error, consequatur fugiat vitae culpa aspernatur. Error ipsum maiores maxime a dolores incidunt velit nam corporis nulla? Quidem, sapiente, veritatis aliquid velit voluptas asperiores eveniet recusandae, amet culpa blanditiis autem quod fuga voluptatibus voluptatum ducimus impedit hic. Voluptatibus quam molestias saepe iure officia, corrupti maxime illum cupiditate consequatur odio iusto minima repudiandae consectetur aliquid rem, quis eum impedit ab. Nihil molestias qui tempore odit.",
+  //   },
+  //   term2: {
+  //     img: "https://plus.unsplash.com/premium_photo-1671638543170-8a1b232c11b9?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80",
+  //     def: "description of the card and the term bla bla bla2",
+  //   },
+  //   term3: {
+  //     img: "https://images.unsplash.com/photo-1580144185736-77ee9168752c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80",
+  //     def: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit beatae tenetur non, aliquam id quis ad error, consequatur fugiat vitae culpa aspernatur. Error ipsum maiores maxime a dolores incidunt velit nam corporis nulla?",
+  //   },
+  //   term4: {
+  //     img: "https://images.unsplash.com/photo-1590749670993-806265aa558a?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80",
+  //     def: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Reprehenderit beatae tenetur non, aliquam id quis ad error, consequatur fugiat vitae culpa aspernatur. Error ipsum maiores maxime a dolores incidunt velit nam corporis nulla? Quidem, sapiente, veritatis aliquid velit voluptas asperiores eveniet recusandae, amet culpa blanditiis autem quod fuga voluptatibus voluptatum ducimus impedit hic.",
+  //   },
+  // }; // dummy data
+
+  // const [img, setImg] = useState(terms.term1.img);
+  // const [def, setDef] = useState(terms.term1.def);
+  // const [active, setActive] = useState(Object.keys(terms)[0]);
+  const [img, setImg] = useState(); //flashCards[id].terms[0].img
+  const [def, setDef] = useState(flashCards[id].terms[0].def);
+  const [active, setActive] = useState(Object.keys(flashCards[id].terms)[0]);
 
   const { isMobile } = useSelector((state) => state.mobile);
   useEffect(() => {
@@ -43,10 +55,15 @@ function FlashCardTerms(props) {
     );
   }, [isMobile, props]);
 
-  const handleClick = (name) => {
-    setActive(name);
-    setImg(terms[name].img);
-    setDef(terms[name].def);
+  // const handleClick = (name) => {
+  //   setActive(name);
+  //   setImg(flashCards.terms[name].img);
+  //   setDef(terms[name].def);
+  // };
+  const handleClick = (i) => {
+    setActive(i);
+    setImg(flashCards[id].terms[i].img);
+    setDef(flashCards[id].terms[i].def);
   };
 
   const onClickNext = (active) => {
@@ -54,8 +71,8 @@ function FlashCardTerms(props) {
       const index = keys.indexOf(active);
       const act = keys[index + 1];
       setActive(act);
-      setImg(terms[keys[keys.indexOf(active) + 1]].img);
-      setDef(terms[keys[keys.indexOf(active) + 1]].def);
+      // setImg(terms[keys[keys.indexOf(active) + 1]].img);
+      // setDef(terms[keys[keys.indexOf(active) + 1]].def);
     }
   };
 
@@ -63,12 +80,15 @@ function FlashCardTerms(props) {
     if (keys.indexOf(active) + 1 > 1) {
       const index = keys.indexOf(active);
       setActive(keys[index - 1]);
-      setImg(terms[keys[keys.indexOf(active) - 1]].img);
-      setDef(terms[keys[keys.indexOf(active) - 1]].def);
     }
+    //   setImg(terms[keys[keys.indexOf(active) - 1]].img);
+    //   setDef(terms[keys[keys.indexOf(active) - 1]].def);
+    // }
   };
 
-  const keys = Object.keys(terms);
+  // const keys = Object.keys(terms);
+  const keys = Object.values(flashCards[id].terms.no);
+  console.log(keys);
 
   return (
     <div

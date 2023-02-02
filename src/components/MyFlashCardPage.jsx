@@ -20,7 +20,6 @@ function MyFlashCardPage() {
   // calling the cards store for data
   const { cards } = useSelector((state) => state.cards);
   const flashCards = Object.values(cards);
-  console.log(flashCards);
 
   // const flashCards = [
   //   {
@@ -59,7 +58,12 @@ function MyFlashCardPage() {
     <div className={` grid ${isMobile ? "grid-cols-1" : "grid-cols-3"} gap-1`}>
       {flashCards.map((card) => {
         return (
-          <TitleCard title={card.name} img={card.img} desc={card.description} />
+          <TitleCard
+            title={card.name}
+            img={card.img}
+            desc={card.desc}
+            id={card.id}
+          />
         );
       })}
     </div>

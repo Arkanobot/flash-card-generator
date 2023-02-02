@@ -15,7 +15,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Main />} />
         {/*temp routes to be deleted at the end*/}
-        <Route path={"/flashcard-page"} element={<FlashCardDetails />} />
+        <Route path={"/flashcards/group/:id"} element={<FlashCardDetails />} />
       </Routes>
     </div>
   );
