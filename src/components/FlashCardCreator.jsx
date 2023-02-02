@@ -3,6 +3,10 @@ import React, { useState, useEffect } from "react";
 //react-icons
 import { TbFileUpload } from "react-icons/tb";
 import { IoMdAdd } from "react-icons/io";
+import { BiEdit } from "react-icons/bi";
+import { MdOutlineDeleteForever } from "react-icons/md";
+
+//redux store/reducers
 import { useSelector, useDispatch } from "react-redux";
 import { mobileVal } from "../redux/isMobile";
 import { cardVal } from "../redux/flashcards";
@@ -96,6 +100,13 @@ export default function FlashCardCreator() {
     let trm = Array.from(term);
     trm[i].img = termImg;
     setTerm(trm);
+  };
+  //delete term img
+
+  const deleteImg = (i) => {
+    let tempterm = Array.from(term);
+    tempterm[i].img = "";
+    setTerm(tempterm);
   };
 
   //create group function goes here
@@ -227,7 +238,7 @@ export default function FlashCardCreator() {
                   <strong className="text-slate-500 text-l my-3 ">
                     Enter Defination*
                   </strong>
-                  <input
+                  <textarea
                     className="form-control block w-full px-3 py-6 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-400 rounded-lg transition ease-in-out my-6 focus:text-gray-700 focus:bg-white focus:border-slate-500 focus:outline-none"
                     type="text"
                     label="termDefination"
@@ -235,14 +246,18 @@ export default function FlashCardCreator() {
                     required
                     minLength="1"
                     onChange={(e) => handleTermDef(e, i)}
-                  />
+                  ></textarea>
                 </div>
                 <div
                   className={`termImage ${
                     isMobile ? "col-span-1" : "col-span-2"
                   }`}
                 >
-                  <div className="groupImage m-2 mt-8 p-1.5 py-4">
+                  <div
+                    className={`groupImage m-2 mt-8 p-1.5 py-4 ${
+                      term[i].img === "" ? "" : "hidden"
+                    }`}
+                  >
                     <label
                       for={`img-upload${i}`}
                       className="flex p-2 py-4 border-solid border-2 border-blue-600 rounded-lg shadow-inner shadow-gray  cursor-pointer justify-center"
@@ -258,6 +273,28 @@ export default function FlashCardCreator() {
                       required
                       onChange={() => handleTermImg(i)}
                     />
+                  </div>
+                  <div
+                    className={`flex m-2 mt-8 p-1.5 py-4 ${
+                      term[i].img === "" ? "hidden" : ""
+                    }`}
+                  >
+                    <div className="h-[100px] w-[150px] border-solid border-2 border-slate-400 rounded-md overflow-auto">
+                      <img src={term[i].img} alt={term[i].name} />
+                    </div>
+                    <div className="flex flex-col justify-around m-2">
+                      <div>
+                        <label for={`img-upload${i}`}>
+                          <BiEdit size={30} style={{ color: "#2563eb" }} />
+                        </label>
+                      </div>
+                      <div onClick={() => deleteImg(i)}>
+                        <MdOutlineDeleteForever
+                          size={33}
+                          style={{ color: "#2563eb" }}
+                        />
+                      </div>
+                    </div>
                   </div>
                 </div>
               </>
