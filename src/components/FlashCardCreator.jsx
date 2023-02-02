@@ -118,8 +118,8 @@ export default function FlashCardCreator() {
       grpId++;
       console.log(cardGroup);
       dispatch(cardVal(cardGroup));
+      setTerm([{ no: "1", name: "", defination: "", img: "" }]);
     }
-    setTerm([{ no: "1", name: "", defination: "", img: "" }]);
   };
 
   return (
@@ -254,6 +254,8 @@ export default function FlashCardCreator() {
                       className="hidden"
                       id={`img-upload${i}`}
                       type="file"
+                      label="img-upload"
+                      required
                       onChange={() => handleTermImg(i)}
                     />
                   </div>
