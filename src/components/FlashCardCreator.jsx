@@ -142,16 +142,16 @@ export default function FlashCardCreator() {
           <strong className="text-slate-500 text-xl my-3 col-span-3">
             Create Group *
           </strong>
-          <div className="groupTitle flex flex-col col-span-2">
+          <div className="groupTitle flex flex-col col-span-1">
             <input
               className="form-control block w-full px-3 py-6 text-base font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-400 rounded-lg transition ease-in-out my-6 focus:text-gray-700 focus:bg-white focus:border-slate-500 focus:outline-none"
               type="text"
               label="groupTitle"
               spellCheck
               required
-              placeholder="Please Enter a Group Name (max 40 chars)"
+              placeholder="Please Enter a Group Name (max 20 chars)"
               minLength="1"
-              maxLength="40"
+              maxLength="20"
               onChange={(e) => handleCardGroup(e)}
             />
           </div>
@@ -182,9 +182,9 @@ export default function FlashCardCreator() {
               label="groupDescription"
               spellCheck
               required
-              placeholder="Please Enter the description (max 350 chars)"
-              row="5"
-              maxLength="350"
+              placeholder="Please Enter the description (max 500 chars)"
+              rows="4"
+              maxLength="500"
               onChange={(e) => {
                 handleGroupDesc(e);
               }}
@@ -203,13 +203,13 @@ export default function FlashCardCreator() {
           {term.map((data, i) => {
             return (
               <>
-                <div className=" termNumber col-span-1 p-2 py-12">
-                  <strong
-                    className="text-white text-xl p-5 bg-red-600 rounded-full "
+                <div className=" termNumber col-span-1 p-[30%] py-12">
+                  <div
+                    className={`text-white text-xl p-5 bg-red-600 rounded-full grid justify-center`}
                     onClick={() => deleteTerm(i)}
                   >
                     {i + 1}
-                  </strong>
+                  </div>
                 </div>
                 <div
                   className={`termName mr-3 ${
@@ -245,6 +245,7 @@ export default function FlashCardCreator() {
                     spellCheck
                     required
                     minLength="1"
+                    rows={`${term[i].img === "" ? 1 : 2}`}
                     onChange={(e) => handleTermDef(e, i)}
                   ></textarea>
                 </div>
@@ -283,16 +284,33 @@ export default function FlashCardCreator() {
                       <img src={term[i].img} alt={term[i].name} />
                     </div>
                     <div className="flex flex-col justify-around m-2">
-                      <div>
-                        <label for={`img-upload${i}`}>
-                          <BiEdit size={30} style={{ color: "#2563eb" }} />
-                        </label>
-                      </div>
-                      <div onClick={() => deleteImg(i)}>
+                      <div
+                        onClick={() => deleteImg(i)}
+                        // onClick={() => deleteTerm(i)}
+                        className={`cursor-pointer ${i === 0 ? "" : "hidden"}`}
+                      >
                         <MdOutlineDeleteForever
                           size={33}
-                          style={{ color: "#2563eb" }}
+                          style={{ color: "#94a3b8" }}
                         />
+                      </div>
+                      <div
+                        // onClick={() => deleteImg(i)}
+                        onClick={() => deleteTerm(i)}
+                        className={`cursor-pointer ${i === 0 ? "hidden" : ""}`}
+                      >
+                        <MdOutlineDeleteForever
+                          size={33}
+                          style={{ color: "#94a3b8" }}
+                        />
+                      </div>
+                      <div>
+                        <label
+                          for={`img-upload${i}`}
+                          className="cursor-pointer"
+                        >
+                          <BiEdit size={30} style={{ color: "#2563eb" }} />
+                        </label>
                       </div>
                     </div>
                   </div>

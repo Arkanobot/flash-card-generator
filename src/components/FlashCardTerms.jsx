@@ -15,6 +15,19 @@ import { mobileVal } from "../redux/isMobile";
 //react-icons
 import { HiOutlineClipboardDocumentCheck } from "react-icons/hi2";
 
+//react-toastify
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+//react-share
+import {
+  EmailShareButton,
+  FacebookShareButton,
+  LinkedinShareButton,
+  TwitterShareButton,
+  WhatsappShareButton,
+} from "react-share";
+
 // const Count = 0;
 
 function FlashCardTerms(props) {
@@ -96,16 +109,21 @@ function FlashCardTerms(props) {
   //modal- copy to clipboard
   const handleCopy = () => {
     window.navigator.clipboard.writeText(window.location.href);
-    window.alert("Link Copied!");
+    notify();
   };
 
-  //modal - Email
-  const loc = window.location.href;
-  const handleMailTo = () => {
-    window.open(
-      `mailto:?Subject=Hey,%20I%20found%20a%20qreally%20rinteresting%20flashcard!,%20take%20a%20look! &body= Link: ${loc}`
-    );
-  };
+  //copy - toast
+  const notify = () =>
+    toast.success("Link Copied!", {
+      position: "bottom-left",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+    });
 
   return (
     <div
@@ -124,16 +142,16 @@ function FlashCardTerms(props) {
         }`}
       >
         <div
-          className={`termCount col-span-1 rounded-lg border-2 bg-white shadow-lg shadow-gray py-5`}
+          className={`termCount col-span-1 rounded-lg border-2 bg-white shadow-lg shadow-gray py-5 grid grid-cols-1`}
         >
-          <span className=" m-5 text-2xl text-slate-500 font-semibold border-b-2 border-slate-400 overflow-auto w-full">
+          <span className=" m-5 text-2xl text-slate-500 font-semibold border-b-2 border-slate-400 overflow-auto col-span-1">
             Flashcards
           </span>
           {keys.map((name) => {
             return (
               <div
                 onClick={() => handleClick(name)}
-                className={`px-14 py-4  font-semibold hover:bg-slate-100 ${
+                className={`font-semibold hover:bg-slate-100 col-span-1 justify-self-center px-[5%] py-1 ${
                   active === name ? "text-red-700 text-3xl" : "text-2xl"
                 }`}
               >
@@ -229,7 +247,10 @@ function FlashCardTerms(props) {
           <RiArrowGoForwardLine className="h-5 w-5 m-1 mx-auto" />
           <span className="col-span-1">Share</span>
         </button>
-        <button className="rounded-lg border-2 py-6 px-8 bg-white shadow-lg shadow-gray mb-5 mx-[6%] text-xl text-slate-500 font-semibold grid  grid-cols-3 place-content-center hover:bg-slate-100">
+        <button
+          className="rounded-lg border-2 py-6 px-8 bg-white shadow-lg shadow-gray mb-5 mx-[6%] text-xl text-slate-500 font-semibold grid  grid-cols-3 place-content-center hover:bg-slate-100"
+          onClick={handlePrint}
+        >
           <BsBoxArrowInDown className="h-5 w-5 mx-auto" />
           Download
         </button>
@@ -247,7 +268,9 @@ function FlashCardTerms(props) {
         class={`fixed z-40 w-screen h-screen inset-0 bg-gray-900 bg-opacity-60 ${
           share === "Share" ? "" : "hidden"
         }`}
-      ></div>
+      >
+        <ToastContainer />
+      </div>
 
       <div
         id="dialog"
@@ -283,22 +306,32 @@ function FlashCardTerms(props) {
           {/*modal share buttons */}
           <div className={`mt-10 mx-1 flex justify-between`}>
             <div className="facebook shadow-inner shadow-slate-300 rounded-md p-1 h-10 w-10">
-              <BsFacebook size={30} style={{ color: "#0165E1" }} />
+              <FacebookShareButton url={`${window.location.href}`}>
+                <BsFacebook size={30} style={{ color: "#0165E1" }} />
+              </FacebookShareButton>
             </div>
             <div className="linkedin shadow-inner shadow-slate-300 rounded-md p-1 h-10 w-10">
-              <BsLinkedin size={30} style={{ color: "#0077B5" }} />
+              <LinkedinShareButton url={`${window.location.href}`}>
+                <BsLinkedin size={30} style={{ color: "#0077B5" }} />
+              </LinkedinShareButton>
             </div>
             <div className="whatsapp shadow-inner shadow-slate-300 rounded-md p-1 h-10 w-10">
-              <FaWhatsappSquare size={30} style={{ color: "#25D366" }} />
+              <WhatsappShareButton url={`${window.location.href}`}>
+                <FaWhatsappSquare size={30} style={{ color: "#25D366" }} />
+              </WhatsappShareButton>
             </div>
             <div className="twitter shadow-inner shadow-slate-300 rounded-md p-1 h-10 w-10">
-              <FaTwitterSquare size={30} style={{ color: "#1DA1F2" }} />
+              <TwitterShareButton url={`${window.location.href}`}>
+                <FaTwitterSquare size={30} style={{ color: "#1DA1F2" }} />
+              </TwitterShareButton>
             </div>
             <div
               className="email shadow-inner shadow-slate-300 rounded-md p-1 h-10 w-10"
-              onClick={handleMailTo}
+              // onClick={handleMailTo}
             >
-              <MdEmail size={30} />
+              <EmailShareButton url={`${window.location.href}`}>
+                <MdEmail size={30} />
+              </EmailShareButton>
             </div>
           </div>
         </div>
