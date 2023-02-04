@@ -51,7 +51,7 @@ function FlashCardTerms(props) {
   const flashCards = Object.values(cards);
 
   // states to manage the Image, definition, active tab, print and share button
-  const [img, setImg] = useState(); //flashCards[id].terms[0].img
+  const [img, setImg] = useState(flashCards[id].terms[0].img); //flashCards[id].terms[0].img
   const [def, setDef] = useState(flashCards[id].terms[0].defination);
   const [active, setActive] = useState(Object.keys(flashCards[id].terms)[0]);
   const [print, setPrint] = useState("Normal");
@@ -147,9 +147,10 @@ function FlashCardTerms(props) {
           <span className=" m-5 text-2xl text-slate-500 font-semibold border-b-2 border-slate-400 overflow-auto col-span-1">
             Flashcards
           </span>
-          {keys.map((name) => {
+          {keys.map((name, i) => {
             return (
               <div
+                key={i}
                 onClick={() => handleClick(name)}
                 className={`font-semibold hover:bg-slate-100 col-span-1 justify-self-center px-[5%] py-1 ${
                   active === name ? "text-red-700 text-3xl" : "text-2xl"
