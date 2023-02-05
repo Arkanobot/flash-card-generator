@@ -1,14 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom"; //useNavigate,
-// import { useSelector } from "react-redux";
 
-function TitleCard(props) {
-  //calling the store
-  // const navigate = useNavigate();
-
-  // const redirectFlashCardPage = () => {
-  //   navigate("/flashcard-page");
-  // };
+export default function TitleCard(props) {
   return (
     <div className="titleCard flex flex-col rounded-lg border-2 py-14 px-8 bg-white shadow-lg shadow-gray text-center relative my-20 p-10 w-3/4 col-span-1 mx-10 hover:bg-slate-100">
       <div
@@ -37,5 +30,3 @@ function TitleCard(props) {
     </div>
   );
 }
-
-export default TitleCard;

@@ -30,7 +30,7 @@ import {
 
 // const Count = 0;
 
-function FlashCardTerms(props) {
+export default function FlashCardTerms(props) {
   // state stored in redux to manage mobile version of the App
   const { isMobile } = useSelector((state) => state.mobile);
   useEffect(() => {
@@ -340,5 +340,3 @@ function FlashCardTerms(props) {
     </div>
   );
 }
-
-export default FlashCardTerms;

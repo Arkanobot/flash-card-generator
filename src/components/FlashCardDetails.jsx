@@ -7,23 +7,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { IoMdArrowRoundBack } from "react-icons/io";
 import { mobileVal } from "../redux/isMobile";
 
-function FlashCardDetails() {
-  const { cards } = useSelector((state) => state.cards);
-  const { id } = useParams();
-  const flashCards = Object.values(cards);
-  // console.log(flashCards);
-
-  // const flash = {
-  //   name: "Name Card",
-  //   img: "https://images.unsplash.com/photo-1595790217471-cc501a17e15e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1929&q=80",
-  //   description:
-  //     "description of the card and the term bla bla blaaaaaaaaaaaa aaaaaaaaaaaa aaaaaaaaaaaaa aaaaaaaa aaaaaaa aaa",
-  // };
-  const navigate = useNavigate();
-  const onClickBack = () => {
-    navigate("/");
-  };
-
+export default function FlashCardDetails() {
   const { isMobile } = useSelector((state) => state.mobile);
   const dispatch = useDispatch();
   useEffect(() => {
@@ -36,6 +20,15 @@ function FlashCardDetails() {
       false
     );
   }, [isMobile, dispatch]);
+
+  const { cards } = useSelector((state) => state.cards);
+  const { id } = useParams();
+  const flashCards = Object.values(cards);
+
+  const navigate = useNavigate();
+  const onClickBack = () => {
+    navigate("/");
+  };
 
   return (
     <div>
@@ -77,5 +70,3 @@ function FlashCardDetails() {
     </div>
   );
 }
-
-export default FlashCardDetails;
